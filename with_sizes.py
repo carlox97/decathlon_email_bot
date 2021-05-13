@@ -39,17 +39,16 @@ Subject: %s
 
 print('running...')
 
-cool_down = 1800  #sec, ovvero mezzora di pausa dopo una mail
-cadenza = 120 #sec, ovvero ogni quanto controllo se ci sono i dischi
-
 chrome_options = Options()
 chrome_options.add_argument("--headless")
-driver = webdriver.Chrome("C:\web\chromedriver.exe",options=chrome_options)
+driver = webdriver.Chrome("C:\web\chromedriver.exe")
 
 driver.get("https://www.decathlon.it/p/disco-ghisa-bodybuilding-28mm/_/R-p-7278?currentPage=1&filter=all&mc=1042303&c=NERO&orderId=it622328573")
 driver.set_window_size(1296, 1400)
 element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#didomi-notice-agree-button > span")))
 driver.find_element(By.CSS_SELECTOR, "#didomi-notice-agree-button > span").click()
+
+cool_down = 1800  #sec
 
 while True:
 
@@ -57,29 +56,23 @@ while True:
 
     # 5KG
 
-    driver.find_element(By.CSS_SELECTOR, ".select:nth-child(4) .label-container").click()
-    driver.find_element(By.CSS_SELECTOR, "#option-product-size-selection-3 > .size-option").click()   # 0=0.5KG; 1=1KG 2=2KG; 3=5KG; 4=10KG; 5=20KG;
-    try:
-        driver.find_element(By.CSS_SELECTOR, ".cta--block").is_displayed()
+    driver.find_element(By.CSS_SELECTOR, ".sizes__button").click()
+    driver.find_element(By.CSS_SELECTOR, ".sizes__size:nth-child(4) > .sizes__info").click()
+    if driver.find_element(By.ID, "ctaButton").is_displayed():
         send_mail()
         time.sleep(cool_down)
         driver.refresh()
-        time.sleep(1)
-    except:
         time.sleep(1)
 
    # 20KG
 
-    driver.find_element(By.CSS_SELECTOR, ".select:nth-child(4) .label-container").click()
-    driver.find_element(By.CSS_SELECTOR, "#option-product-size-selection-5 > .size-option").click()
-    try:
-        driver.find_element(By.CSS_SELECTOR, ".cta--block").is_displayed()
+    driver.find_element(By.CSS_SELECTOR, ".sizes__button").click()
+    driver.find_element(By.CSS_SELECTOR, ".sizes__size:nth-child(6) > .sizes__info").click()
+    if driver.find_element(By.ID, "ctaButton").is_displayed():
         send_mail()
         time.sleep(cool_down)
         driver.refresh()
         time.sleep(1)
-    except:
-        time.sleep(1)
 
-    time.sleep(cadenza)
+    time.sleep(120)
     driver.refresh()
