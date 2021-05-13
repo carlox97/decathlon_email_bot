@@ -49,6 +49,7 @@ element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS
 driver.find_element(By.CSS_SELECTOR, "#didomi-notice-agree-button > span").click()
 
 cool_down = 1800  #sec
+cadenza = 120 #sec
 
 while True:
 
@@ -74,5 +75,5 @@ while True:
         driver.refresh()
         time.sleep(1)
 
-    time.sleep(120)
+    time.sleep(cadenza)
     driver.refresh()
