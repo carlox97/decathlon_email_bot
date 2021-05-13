@@ -55,14 +55,9 @@ while True:
 
     time.sleep(1)
 
-    try:
-        driver.find_element(By.CSS_SELECTOR, ".cta--block").is_displayed()
+    if driver.find_element(By.ID, "ctaButton").is_displayed():
         send_mail()
-        time.sleep(cool_down)
-        driver.refresh()
-        time.sleep(1)
-    except:
-        time.sleep(1)
+        time.sleep(cool_down-cadenza)
 
     time.sleep(cadenza)
     driver.refresh()
