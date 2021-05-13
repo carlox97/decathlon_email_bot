@@ -41,7 +41,7 @@ print('running...')
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
-driver = webdriver.Chrome("C:\web\chromedriver.exe")
+driver = webdriver.Chrome("C:\web\chromedriver.exe",options=chrome_options)
 
 driver.get("https://www.decathlon.it/p/disco-ghisa-bodybuilding-28mm/_/R-p-7278?currentPage=1&filter=all&mc=1042303&c=NERO&orderId=it622328573")
 driver.set_window_size(1296, 1400)
