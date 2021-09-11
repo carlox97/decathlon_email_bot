@@ -14,8 +14,8 @@ def send_mail():
 
     sent_from = gmail_user
     to = ['MAIL_BEING_NOTIFIED']
-    subject = 'Dischi 5KG Disponibili'
-    body = 'https://www.decathlon.it/p/disco-ghisa-bodybuilding-28mm/_/R-p-7278?currentPage=1&filter=all&mc=1042303&c=NERO&orderId=it622328573 \n\n'
+    subject = 'Dischi Disponibili'
+    body = 'https://www.decathlon.it/p/disco-ghisa-bodybuilding-28mm/_/R-p-7278?mc=1042303&c=NERO \n\n'
 
     email_text = """From: %s
 To: %s
@@ -43,37 +43,50 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")
 driver = webdriver.Chrome("C:\web\chromedriver.exe",options=chrome_options)
 
-driver.get("https://www.decathlon.it/p/disco-ghisa-bodybuilding-28mm/_/R-p-7278?currentPage=1&filter=all&mc=1042303&c=NERO&orderId=it622328573")
-driver.set_window_size(1296, 1400)
-element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#didomi-notice-agree-button > span")))
-driver.find_element(By.CSS_SELECTOR, "#didomi-notice-agree-button > span").click()
+driver.get("https://www.decathlon.it/p/disco-ghisa-bodybuilding-28mm/_/R-p-7278?mc=1042303&c=NERO")
+time.sleep(3)
+driver.find_element(By.CSS_SELECTOR, ".didomi-continue-without-agreeing").click()   # rifiuta cookies
 
+isp=0
 cool_down = 1800  #sec
-cadenza = 120 #sec
 
 while True:
 
-    time.sleep(1)
-
     # 5KG
 
-    driver.find_element(By.CSS_SELECTOR, ".sizes__button").click()
-    driver.find_element(By.CSS_SELECTOR, ".sizes__size:nth-child(4) > .sizes__info").click()
-    if driver.find_element(By.ID, "ctaButton").is_displayed():
+    driver.find_element(By.CSS_SELECTOR, ".select:nth-child(4) .svg-icon").click()
+    time.sleep(1)
+    #driver.find_element(By.CSS_SELECTOR, "#option-product-size-selection-3 .stock").click()
+    driver.find_element(By.ID, "option-product-size-selection-3").click()   # seleziona dimensione: 0 - 0.5KG; 1 - 1KG; 2 - 2KG; 3 - 5KG; 4 - 10KG; 5 - 20KG
+    time.sleep(2)
+    try:
+        driver.find_element(By.XPATH,"//*[@id='app']/main/article/div[1]/div[6]/section/article/div/button").is_displayed()
+        #driver.find_element(By.CSS_SELECTOR, ".cta--block").is_displayed()
+    except:
+        time.sleep(120)
+    else:
         send_mail()
-        time.sleep(cool_down)
-        driver.refresh()
-        time.sleep(1)
+        isp=1
 
-   # 20KG
+    # 10KG
 
-    driver.find_element(By.CSS_SELECTOR, ".sizes__button").click()
-    driver.find_element(By.CSS_SELECTOR, ".sizes__size:nth-child(6) > .sizes__info").click()
-    if driver.find_element(By.ID, "ctaButton").is_displayed():
+    driver.find_element(By.CSS_SELECTOR, ".select:nth-child(4) .svg-icon").click()
+    time.sleep(1)
+    #driver.find_element(By.CSS_SELECTOR, "#option-product-size-selection-3 .stock").click()
+    driver.find_element(By.ID, "option-product-size-selection-4").click()   # seleziona dimensione: 0 - 0.5KG; 1 - 1KG; 2 - 2KG; 3 - 5KG; 4 - 10KG; 5 - 20KG
+    time.sleep(2)
+    try:
+        driver.find_element(By.XPATH,"//*[@id='app']/main/article/div[1]/div[6]/section/article/div/button").is_displayed()
+        #driver.find_element(By.CSS_SELECTOR, ".cta--block").is_displayed()
+    except:
+        time.sleep(120)
+    else:
         send_mail()
-        time.sleep(cool_down)
-        driver.refresh()
-        time.sleep(1)
+        isp=1
 
-    time.sleep(cadenza)
+    if isp:
+        time.sleep(cool_down)
+        isp=0
+
     driver.refresh()
+    time.sleep(2)
