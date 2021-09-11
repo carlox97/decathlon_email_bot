@@ -7,4 +7,4 @@ Requirements:
 
 - https://chromedriver.chromium.org/downloads in "C:\web\chromedriver.exe"
 
-- 2FA in Gmail, explained here https://stackabuse.com/how-to-send-emails-with-gmail-using-python/
+- 2FA in Gmail, explained here https://stackabuse.com/how-to-send-emails-with-gmail-using-python/ (Authenticating with Gmail)
