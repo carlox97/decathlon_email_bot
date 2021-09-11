@@ -1,5 +1,7 @@
 # decathlon_email_bot
-A bot that sends you an e-mail if a decathlon product is available
+A bot that sends you an e-mail if a decathlon product is available (their email notification doesn't work properly)
+
+Un bot che ti invia una notifica se un prodotto è disponibile su decathlon (la loro mail di notifica non arriva in tempi utili, se arriva)
 
 Requirements:
 
